@@ -119,29 +119,11 @@ Use this mode when the user asks for a `расчетно-пояснительн�
 
 ## Title Page Assets
 
-Prefer copying a known-good BMSTU title page as a whole page because logos, fonts, and layout can break if recreated manually. For lab reports, take the bundled title-page template as an intact ready-made page and insert/reuse it directly; do not recreate its layout or make unnecessary structural edits. In the bundled lab template, the faculty, department, student group, and student name are stable defaults and should remain unchanged unless the user explicitly provides replacements.
+Prefer copying a known-good BMSTU title page as a whole page because logos, fonts, and layout can break if recreated manually. Do not rely on bundled title-page assets unless the repository explicitly includes a sanitized blank template. Never publish or reuse a title-page template that contains another student's personal data.
 
-First look for bundled title pages in this skill's applications/assets folder:
+If no safe bundled template exists, ask the user for a clean title-page template or a prior report they are allowed to reuse. When a user-provided template is available, copy the title page as an intact page and edit only the variable fields needed for the current report. Preserve stable faculty/department wording from the template unless the user provides replacements.
 
-```text
-assets/title-pages/
-```
-
-Current bundled BMSTU title page:
-
-```text
-assets/title-pages/bmstu-iu6-title-template.docx
-```
-
-Use these bundled title pages before searching the user's filesystem. If no bundled title page matches the faculty/department/report type, ask the user for a template and then add a generalized copy to `assets/title-pages/` when they want the skill to remember it.
-
-If bundled assets are unavailable or inappropriate, use the user's provided template, for example:
-
-```text
-/Users/ralolaev/bmstu/интеллектуальные_технологии_информационной_безопасности/примеры работ/Лабораторная работа 1_Дима/Каракешишян_Дмитрий_ИУ6-55Б_Лаб_1.docx
-```
-
-On the bundled lab title page, preserve the template's stable identity fields unless the user explicitly provides replacements: faculty, department, student group, student name, and teacher. For this user's lab reports, the stable student defaults are group `ИУ6-64Б` and student `Р.А. Лолаев`; keep these values unless the user explicitly changes them. Change only fields that must vary for the current lab, typically lab number, lab title, year, and discipline when the discipline differs. Do not change other title-page elements unless the user asks.
+Before committing or sharing any template asset, inspect it for personal data: full names, signatures, group numbers, teacher names, emails, phone numbers, hidden comments, tracked changes, and document metadata. If it is not clearly sanitized, do not commit it.
 
 ## Formatting Rules
 
