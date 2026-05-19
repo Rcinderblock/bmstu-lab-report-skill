@@ -1,0 +1,4 @@
+interface:
+  display_name: "BMSTU Lab Report"
+  short_description: "BMSTU lab reports with GOST-like formatting"
+  default_prompt: "Use $bmstu-lab-report to complete a lab and create a formatted BMSTU DOCX report."
