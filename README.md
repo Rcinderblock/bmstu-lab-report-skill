@@ -37,13 +37,6 @@ git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.codex/skills
 $bmstu-lab-report Сделай отчет по методичке ...
 ```
 
-Если используется Codex Desktop / Codex Plus и skill не подхватился из `~/.codex/skills`, можно дополнительно положить его в локальную папку Codex Plus:
-
-```bash
-mkdir -p ~/.codex-plus/skills
-git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.codex-plus/skills/bmstu-lab-report
-```
-
 Обычно достаточно одного корректного расположения, где внутри папки skill лежит файл `SKILL.md`.
 
 ## Установка в Claude Code
