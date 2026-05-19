@@ -28,14 +28,11 @@ git clone -b main git@github.com:Rcinderblock/bmstu-lab-report-skill.git <пап
 ```text
 bmstu-lab-report-skill/
 ├── SKILL.md
-├── agents/
-│   └── openai.yaml
-└── assets/
-    └── title-pages/
-        └── bmstu-iu6-title-template.docx
+└── agents/
+    └── openai.yaml
 ```
 
-`SKILL.md` содержит основные правила работы. Папка `assets` содержит шаблон титульного листа, который агент может использовать при сборке отчета.
+`SKILL.md` содержит основные правила работы. Шаблоны титульных листов не хранятся в репозитории, чтобы случайно не публиковать чужие персональные данные.
 
 ## Установка в Codex
 
