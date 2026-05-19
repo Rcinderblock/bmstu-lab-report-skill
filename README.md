@@ -56,6 +56,8 @@ git clone -b main git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.code
 $bmstu-lab-report Сделай отчет по методичке ...
 ```
 
+Обычно достаточно одного корректного расположения, где внутри папки skill лежит файл `SKILL.md`.
+
 Для тестовой ветки вместо `-b main` используй `-b test`.
 
 ## Установка в Claude Code
