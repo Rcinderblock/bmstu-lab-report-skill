@@ -4,6 +4,25 @@
 
 Скилл хранится как обычная папка с `SKILL.md` и дополнительными файлами. Такой формат удобен для Git: его можно клонировать, обновлять через `git pull` и шарить между одногруппниками.
 
+## Ветки
+
+- `main` — стабильная версия скилла.
+- `test` — тестовая ветка для новых правил и экспериментов.
+
+Новые изменения сначала пушатся в `test`. После проверки на реальных отчетах ветку можно вливать в `main`.
+
+Если нужно тестировать свежую версию:
+
+```bash
+git clone -b test git@github.com:Rcinderblock/bmstu-lab-report-skill.git <папка-для-skill>
+```
+
+Если нужно поставить стабильную версию:
+
+```bash
+git clone -b main git@github.com:Rcinderblock/bmstu-lab-report-skill.git <папка-для-skill>
+```
+
 ## Что внутри
 
 ```text
@@ -26,7 +45,7 @@ OpenAI описывает skill как повторяемый workflow в Markdo
 
 ```bash
 mkdir -p ~/.codex/skills
-git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.codex/skills/bmstu-lab-report
+git clone -b main git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.codex/skills/bmstu-lab-report
 ```
 
 После установки перезапусти Codex, если skill не появился сразу.
@@ -37,14 +56,7 @@ git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.codex/skills
 $bmstu-lab-report Сделай отчет по методичке ...
 ```
 
-Если используется Codex Desktop / Codex Plus и skill не подхватился из `~/.codex/skills`, можно дополнительно положить его в локальную папку Codex Plus:
-
-```bash
-mkdir -p ~/.codex-plus/skills
-git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.codex-plus/skills/bmstu-lab-report
-```
-
-Обычно достаточно одного корректного расположения, где внутри папки skill лежит файл `SKILL.md`.
+Для тестовой ветки вместо `-b main` используй `-b test`.
 
 ## Установка в Claude Code
 
@@ -54,7 +66,7 @@ git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.codex-plus/s
 
 ```bash
 mkdir -p ~/.claude/skills
-git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.claude/skills/bmstu-lab-report
+git clone -b main git@github.com:Rcinderblock/bmstu-lab-report-skill.git ~/.claude/skills/bmstu-lab-report
 ```
 
 После этого запусти Claude Code:
@@ -71,11 +83,13 @@ claude
 
 Claude Code также может подключить skill автоматически, если запрос совпадает с `description` в `SKILL.md`.
 
+Для тестовой ветки вместо `-b main` используй `-b test`.
+
 Проектная установка, если skill должен быть доступен только внутри одного репозитория:
 
 ```bash
 mkdir -p .claude/skills
-git clone git@github.com:Rcinderblock/bmstu-lab-report-skill.git .claude/skills/bmstu-lab-report
+git clone -b main git@github.com:Rcinderblock/bmstu-lab-report-skill.git .claude/skills/bmstu-lab-report
 ```
 
 Если папка `.claude/skills` появилась уже после запуска Claude Code, лучше перезапустить `claude`, чтобы watcher точно увидел новую директорию.
@@ -111,6 +125,40 @@ git pull
 
 Если skill установлен в нескольких местах, обновить нужно каждую копию.
 
+Чтобы переключить установленный skill на тестовую ветку:
+
+```bash
+cd ~/.codex/skills/bmstu-lab-report
+git fetch
+git checkout test
+git pull
+```
+
+Для Claude Code путь будет `~/.claude/skills/bmstu-lab-report`.
+
+## Разработка скилла
+
+Рабочий процесс такой:
+
+```bash
+git checkout test
+# внести изменения
+git add .
+git commit -m "Describe change"
+git push origin test
+```
+
+После проверки:
+
+```bash
+git checkout main
+git pull
+git merge test
+git push origin main
+```
+
+Перед вливанием в `main` желательно проверить `SKILL.md` валидатором skill-creator, если он доступен локально, и протестировать скилл на реальной работе.
+
 ## Проверка после установки
 
 Проверь, что файл лежит именно здесь:
@@ -125,7 +173,7 @@ git pull
 - файл называется не `SKILL.md`;
 - репозиторий склонирован на один уровень глубже, например `~/.claude/skills/bmstu-lab-report/bmstu-lab-report-skill/SKILL.md`;
 - Codex или Claude Code не были перезапущены после создания новой папки skills;
-- у пользователя нет доступа к приватному GitHub-репозиторию;
+- у пользователя нет доступа к приватному GitHub-репозиторию: владельцу нужно добавить его в collaborators или выдать другой способ доступа;
 - skill не вызывается автоматически, потому что запрос слишком общий. В таком случае вызови его явно через `$bmstu-lab-report` в Codex или `/bmstu-lab-report` в Claude Code.
 
 ## Источники
