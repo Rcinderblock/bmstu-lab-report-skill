@@ -149,6 +149,41 @@ git pull
 
 Для Claude Code путь будет `~/.claude/skills/bmstu-lab-report`.
 
+## Синхронизация нескольких Codex-профилей
+
+Если на одной машине есть несколько папок Codex, например `~/.codex`, `~/.codex-plus`, `~/.codex-work`, удобнее не держать отдельные копии skill. Используй один репозиторий как источник правды, а в профилях Codex держи символические ссылки:
+
+```bash
+cd <папка-с-репозиторием-skill>
+./scripts/sync_codex_homes.sh
+```
+
+Скрипт синхронизирует эти папки:
+
+```text
+~/.codex
+~/.codex-personal
+~/.codex-plus
+~/.codex-shared
+~/.codex-test
+~/.codex-work
+```
+
+После этого каждый путь вида `<CODEX_HOME>/skills/bmstu-lab-report` будет ссылаться на текущий репозиторий. Обновлять skill нужно в одном месте:
+
+```bash
+cd <папка-с-репозиторием-skill>
+git pull
+```
+
+Если нужен другой список профилей, передай его через `CODEX_HOMES` через двоеточие:
+
+```bash
+CODEX_HOMES="$HOME/.codex:$HOME/.codex-work" ./scripts/sync_codex_homes.sh
+```
+
+После первой синхронизации лучше перезапустить Codex-профили, чтобы они заново прочитали `SKILL.md`.
+
 ## Разработка скилла
 
 Рабочий процесс такой:
