@@ -104,7 +104,7 @@ The report must read as a continuous explanation, not as a pile of screenshots. 
 Use this mode when the user asks for a `расчетно-пояснительная записка`, `РПЗ`, course work report, or course project explanatory note.
 
 - Treat ГОСТ 7.32 and the user's example RПЗ files as formatting references. Prefer the university examples for title-page wording and local department conventions when they do not conflict with the assignment.
-- Do not recreate the title page from scratch when a suitable example RПЗ is provided. Copy the first page/title section from the example document as an intact page and edit only the variable fields when necessary. Rebuilding the title page manually is a last resort.
+- Do not recreate the title page from scratch when a suitable example RПЗ is provided. Insert the title page as the original first-page document/section, preserving its layout exactly, and edit only variable fields when necessary. Rebuilding the title page manually is a last resort.
 - Use the typical structure: title page, `РЕФЕРАТ`, optional `ПЕРЕЧЕНЬ СОКРАЩЕНИЙ И ОБОЗНАЧЕНИЙ`, `СОДЕРЖАНИЕ`, `ВВЕДЕНИЕ`, numbered main sections, `ЗАКЛЮЧЕНИЕ`, `СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ`, optional appendices.
 - For machine-learning course work, organize the main sections around: domain/problem analysis, data preparation and EDA, model/design implementation, testing and result analysis.
 - The final semantic section for coursework is usually `ЗАКЛЮЧЕНИЕ`, not lab-style `Вывод`, unless the user's methodical material explicitly requires `Вывод`.
@@ -116,7 +116,7 @@ Use this mode when the user asks for a `расчетно-пояснительн�
 - Use Times New Roman 14 pt inside coursework RПЗ table cells unless the user explicitly allows a smaller table font or the provided department template uses another size.
 - Prevent bad table page breaks: table caption and the table must stay on the same page; table rows must not split across pages; a table must not be left with only a few rows on one page and the rest on the next. If a table cannot fit in the remaining space, move the caption and whole table to a new page; if it cannot fit on a fresh page, split it deliberately into separate tables with repeated captions/headers.
 - Never place two non-text elements back-to-back. Before every table, figure, or listing add a short lead-in paragraph; after every important table, figure, or listing add a short interpretation. This includes transitions between a table and a figure.
-- Start a new major chapter on a new page only when the current page is already more than about two-thirds full or when the methodical/example document explicitly requires chapter page breaks. If the previous chapter ends around the first third or middle of a page, continue the next chapter on the same page instead of leaving a large blank area.
+- Start a new major chapter on a new page only when the previous chapter already fills more than about two-thirds of its last page or when the methodical/example document explicitly requires chapter page breaks. Put the page break after the previous chapter and before the next chapter heading. If the previous chapter ends around the first third or middle of a page, continue the next chapter on the same page instead of leaving a large blank area.
 
 ## Title Page Assets
 
@@ -138,6 +138,8 @@ When the user has already mentioned stable fields such as group, full name, depa
 
 If no safe bundled template exists for the needed document type, ask the user for a clean title-page template or a prior report they are allowed to reuse. When a user-provided template is available, copy the title page as an intact page and edit only the variable fields needed for the current report. Preserve stable faculty/department wording from the template unless the user provides replacements.
 
+When inserting a title page into a generated document, treat it as page-level composition, not as normal paragraph generation. Concatenate or copy the whole title-page document/section before the report body so the original formatting stays intact. Do not paste it paragraph by paragraph, do not apply the report's global styles to it, do not resize the BMSTU emblem, do not normalize fonts, and do not change line spacing, table geometry, margins, or signature blocks. If fields must be filled, replace only the placeholder text while preserving the original runs, paragraphs, tables, images, section breaks, and page setup.
+
 Before committing or sharing any template asset, inspect it for personal data: full names, signatures, group numbers, teacher names, emails, phone numbers, hidden comments, tracked changes, and document metadata. If it is not clearly sanitized, do not commit it.
 
 Never commit filled title pages or filled assignment blanks to the public skill repository. Shared assets must remain blank templates.
@@ -151,7 +153,7 @@ Never commit filled title pages or filled assignment blanks to the public skill 
 - Tables: add a short introduction before the table and put the table caption above it, for example `Таблица 1 — параметры эксперимента`. Use consistent borders and readable font size.
 - Lists: before a generated list, add an introductory sentence ending with a colon. List items should start with lowercase letters. End each item with a semicolon except the last, which ends with a period.
 - Methodical assignment text may preserve the PDF's original bullet style when copied verbatim.
-- Avoid orphaned fragments and lonely trailing paragraphs. If a new major section would start near the bottom after the previous section fills most of the page, start the major section on a new page. Do not force every subsection onto a new page.
+- Avoid orphaned fragments and lonely trailing paragraphs. If a new major section would start after the previous major section has already filled more than about two-thirds of the page, insert a page break before the new section heading. If the previous section ends before that threshold, continue on the same page. Do not force every subsection onto a new page.
 
 ## Listings
 
@@ -173,12 +175,23 @@ Never commit filled title pages or filled assignment blanks to the public skill 
 When creating or editing `.docx`, use the available document workflow:
 
 1. Generate or update the `.docx`.
-2. Render it to page images with the document renderer when available.
-3. Inspect the rendered pages visually: title page, figure pages, listing pages, and conclusion page. Always check the page images after finishing the report and before delivery.
+2. Render it to page images with the document renderer when available, for example with the Documents skill renderer or an equivalent `docx -> pdf -> png` pipeline. Do this even if structural XML checks pass: Word documents can be valid files and still look broken after rendering.
+3. Inspect the rendered pages visually after finishing the report and before delivery. This step is mandatory, not optional.
 4. Iterate until layout issues are fixed.
 5. Export `.pdf` only after the `.docx` render is acceptable.
 
 If rendering fails because LibreOffice/`soffice` is missing, perform structural checks and Quick Look or equivalent fallback preview, then clearly disclose that full render QA could not be completed.
+
+During visual inspection, check:
+
+- title page matches the original template: BMSTU emblem is present, not stretched, not shifted, fonts and line spacing did not change, signature table stayed aligned, margins look like the template, and no page number is printed on the title page;
+- title page and report body are joined cleanly: the title page remains a separate first page, the body starts after it, and page numbering starts visually where the selected template/report style expects it;
+- table of contents is a real TOC block when required, uses Times New Roman 14 pt in the visible text, and page numbers look plausible;
+- headings are not orphaned at the bottom of a page, and new major sections follow the two-thirds page-break rule;
+- tables keep captions with the table, rows do not split accidentally, headers are readable, and table text uses the required font size;
+- figures keep captions below them, captions are not separated from figures, images are not blurred or distorted, and there is text before/after non-text elements;
+- listings have titles before code, continuation labels when split, and no unreadable wrapping or clipped code;
+- there are no large accidental blank areas, missing images, broken fields, temporary lock-file artifacts, or visible placeholders that should have been filled.
 
 Before delivery, check:
 
