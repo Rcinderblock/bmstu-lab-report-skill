@@ -13,8 +13,9 @@ Use this skill to complete university laboratory work end to end: understand the
 - Do not fabricate results. If a command, validator, screenshot, endpoint, or UI state was not actually observed, run it or ask the user for the missing artifact.
 - Copy the lab goal and lab assignment exactly from the methodical PDF when they are present. If they are absent, formulate concise versions and say they were formulated manually.
 - The last semantic section must be named `Вывод`, never `Заключение`.
-- Ask for missing title-page data before report generation when it cannot be inferred: student full name, group, teacher full name, discipline, lab number, lab title, year, faculty/department, and whether the title page should be inserted automatically.
-- If the user clearly asked for full automation and title data is already known from prior local context, proceed with the known data and record it as an assumption.
+- Before inserting a title page or assignment blank, ask whether the user wants that page inserted at all. If yes, ask whether it should be filled automatically.
+- Ask for missing title-page data before report generation when it cannot be inferred: student full name, group, teacher full name, discipline, lab number, lab title, year, faculty/department, supervisor, and consultant if relevant.
+- If stable title-page data is already known from prior project context, offer it as a proposed default and ask the user to confirm before writing it into a template. After confirmation, record the reusable data in the project notes or memory file when available; never hard-code personal data into this shared skill.
 - Keep generated artifacts organized in a lab-specific folder.
 
 ## Self-Improvement Rule
@@ -121,9 +122,25 @@ Use this mode when the user asks for a `расчетно-пояснительн�
 
 Prefer copying a known-good BMSTU title page as a whole page because logos, fonts, and layout can break if recreated manually. Do not rely on bundled title-page assets unless the repository explicitly includes a sanitized blank template. Never publish or reuse a title-page template that contains another student's personal data.
 
-If no safe bundled template exists, ask the user for a clean title-page template or a prior report they are allowed to reuse. When a user-provided template is available, copy the title page as an intact page and edit only the variable fields needed for the current report. Preserve stable faculty/department wording from the template unless the user provides replacements.
+This repository includes sanitized blank templates:
+
+- `assets/lab/title_lab_new.docx` - newer laboratory title-page template;
+- `assets/lab/title_lab_old.docx` - older laboratory title-page template;
+- `assets/coursework/rpz_title_no_consultant.docx` - coursework RПЗ title page without a consultant line;
+- `assets/coursework/rpz_title_with_consultant.docx` - coursework RПЗ title page with a consultant line;
+- `assets/coursework/coursework_assignment_blank_2026.docx` - 2026 coursework assignment blank.
+
+For laboratory reports, if the user wants a title page inserted and did not specify the template, ask whether to use the old or new lab template. Explain briefly that both variants are usually accepted, the choice is minor, and the option exists only to match the preferred local style. Ask whether to fill the template; if yes, collect or confirm: student full name or initials format, group, discipline, teacher, lab number, lab title, year, faculty, department, and training direction when the selected template needs them.
+
+For coursework RПЗ, ask whether there is a consultant. If yes, use `rpz_title_with_consultant.docx`; otherwise use `rpz_title_no_consultant.docx`. Ask separately whether to insert and fill the coursework assignment blank. If the user wants it filled, collect or confirm: course discipline, student group, student full name, topic, work type/direction, source of topic, technical assignment text, supervisor, consultant if any, issue date, and year. Use 2026 as the default year for the bundled templates unless the user gives another year.
+
+When the user has already mentioned stable fields such as group, full name, department, discipline, or teacher in the current project, do not ask from scratch. Say which values were found, ask whether they are correct, and then reuse them. If the user confirms, store them in the project working notes when such a file exists.
+
+If no safe bundled template exists for the needed document type, ask the user for a clean title-page template or a prior report they are allowed to reuse. When a user-provided template is available, copy the title page as an intact page and edit only the variable fields needed for the current report. Preserve stable faculty/department wording from the template unless the user provides replacements.
 
 Before committing or sharing any template asset, inspect it for personal data: full names, signatures, group numbers, teacher names, emails, phone numbers, hidden comments, tracked changes, and document metadata. If it is not clearly sanitized, do not commit it.
+
+Never commit filled title pages or filled assignment blanks to the public skill repository. Shared assets must remain blank templates.
 
 ## Formatting Rules
 
